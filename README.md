@@ -7,12 +7,17 @@ Code Only for P5 semester project.
 
 # Authors
 
-## Primary contributers:
+#### Primary contributers:
+
 Patrick Staalbo
+
 Mikkel G Hansen
+
 Andreas Johnson
 
-## Assisted by:
+#### Assisted by:
 Jannik Pedersen
+
 Jonas L Lahkrissi
+
 Kasia Flig
