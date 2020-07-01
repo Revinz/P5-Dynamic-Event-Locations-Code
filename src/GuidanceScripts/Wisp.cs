@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Wisp that helps the player locate the nearest event
+/// </summary>
+
 public class Wisp : MonoBehaviour
 {
     public LayerMask playerLayer;
@@ -52,7 +56,7 @@ public class Wisp : MonoBehaviour
 
         if (flying)
             Debug.Log(DistanceToEvent);
-            
+
     }
 
     private GameObject FindClosestEvent()
@@ -64,13 +68,16 @@ public class Wisp : MonoBehaviour
 
         if (isDynamic)
         {
-           return FindClosestEventArea();
+            return FindClosestEventArea();
         }
         else
             return FindActiveEvent();
 
     }
-
+    /// <summary>
+    /// Find the closest EventArea. Used in the dynamic event condition.
+    /// </summary>
+    /// <returns>Returns the GameObject of the EventArea</returns>
     private GameObject FindClosestEventArea()
     {
         //Find the closest event
@@ -86,11 +93,15 @@ public class Wisp : MonoBehaviour
                 currentShortestDistance = DistanceToEvent;
                 Debug.Log(currentShortestDistance);
             }
-        }   
+        }
 
         return ClosestEvent;
     }
 
+    /// <summary>
+    /// Finds the active event. Used in the static event condition.
+    /// </summary>
+    /// <returns>Returns the gameobject of the active event, otherwise returns null</returns>
     private GameObject FindActiveEvent()
     {
         //Find the closest event
@@ -110,18 +121,25 @@ public class Wisp : MonoBehaviour
         return ClosestEvent;
     }
 
+    /// <summary>
+    /// Moves the wisp towards the event destination
+    /// </summary>
     private void MoveToEvent()
     {
         transform.position = Vector3.MoveTowards(transform.position, DestinationEvent.transform.position, DistanceBetweenStartAndEvent * flySpeed * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Moves the wisp towards the start position
+    /// </summary>
     private void ReturnToStart()
     {
-        transform.position = Vector3.MoveTowards(transform.position, originalPosition, DistanceBetweenStartAndEvent * flySpeed/2 * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, originalPosition, DistanceBetweenStartAndEvent * flySpeed / 2 * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        //Start flying when close
         if (1 << other.gameObject.layer == playerLayer)
         {
             flying = true;
@@ -145,6 +163,7 @@ public class Wisp : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        //Return when too far away
         if (1 << other.gameObject.layer == playerLayer)
         {
             flying = false;

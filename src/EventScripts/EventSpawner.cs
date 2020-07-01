@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Spawns the next event when the player is entering the EventArea
+/// </summary>
 public class EventSpawner : MonoBehaviour
 {
     public GameObject spawnedEvent = null;
@@ -22,6 +26,10 @@ public class EventSpawner : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Destroys the event when leaving the EventArea if the player did not see/complete the event
+    /// </summary>
+    /// <param name="other">Player's Collider</param>
     void OnTriggerExit(Collider other)
     {
         if (capsule != null)

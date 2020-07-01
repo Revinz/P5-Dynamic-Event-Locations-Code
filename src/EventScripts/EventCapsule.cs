@@ -12,7 +12,7 @@ public class EventCapsule : MonoBehaviour
         SEEN,
         COMPLETED
     }
-
+    
     public LayerMask playerLayer;
     public string EventName = "";
     public bool ShowColliders = false;
@@ -73,6 +73,7 @@ public class EventCapsule : MonoBehaviour
         terrain.transform.localPosition = new Vector3(-properties.EMPTY_AREA_RADIUS, 0, -properties.EMPTY_AREA_RADIUS);
     }
 
+    /// Since the events has a terrain of their own, we need to hide it
     public void HideTerrain(bool value)
     {
         terrain.enabled = false;

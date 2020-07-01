@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Makes an object 'bob' up and down
+/// </summary>
 public class BobbingAnim : ScriptAnim
 {
     public float bobbingHeight = 1;

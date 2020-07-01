@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Makes an object increase/decrease in size like a heartbeat
+/// </summary>
 public class HeartbeatAnim : ScriptAnim
 {
     public float speed;

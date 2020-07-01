@@ -3,8 +3,18 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+/*
+*
+*   Terrain Editing Tool
+*   Allows for placing prefabs on the terrain with original colliders
+*
+*   Created by Patrick Staalbo.
+*
+*/
+
 [ExecuteInEditMode]
-public class ObjectPlacer : EditorWindow {
+public class ObjectPlacer : EditorWindow
+{
 
     public static Terrain terrain;
     public GameObject[] ObjectsToPlace = null;
@@ -25,14 +35,16 @@ public class ObjectPlacer : EditorWindow {
 
 
     [MenuItem("TerrainEditor/PlacePrefabs")]
-    static void Init() {
+    static void Init()
+    {
         window = (ObjectPlacer)EditorWindow.GetWindow(typeof(ObjectPlacer));
 
         window.Show();
     }
 
 
-    void OnEnable() {
+    void OnEnable()
+    {
         //Lets us get the scene events and draw in the scene
         SceneView.duringSceneGui -= SceneGUI;
         SceneView.duringSceneGui += SceneGUI;
@@ -40,7 +52,8 @@ public class ObjectPlacer : EditorWindow {
     }
 
 
-    void SceneGUI(SceneView sceneView) {
+    void SceneGUI(SceneView sceneView)
+    {
 
         // This will have scene events including mouse down on scenes objects
         Event cur = Event.current;
@@ -48,11 +61,14 @@ public class ObjectPlacer : EditorWindow {
         RaycastHit hit = new RaycastHit();
         LayerMask TerrainLayer = 1 << 9;
 
-        if (cur.type == EventType.MouseDown && cur.button == 0 && Enabled) {
-            if (Physics.Raycast(ray, out hit, 1000.0f, TerrainLayer)) {
+        if (cur.type == EventType.MouseDown && cur.button == 0 && Enabled)
+        {
+            if (Physics.Raycast(ray, out hit, 1000.0f, TerrainLayer))
+            {
                 //Debug.Log(Event.current.mousePosition);
 
-                if (ParentGameObject == null && !removeObjects) {
+                if (ParentGameObject == null && !removeObjects)
+                {
                     EditorUtility.DisplayDialog("Missing 'Parent' GameObject", "Please set 'Parent' GameObject.", "OK");
                     return;
                 }
@@ -73,7 +89,8 @@ public class ObjectPlacer : EditorWindow {
         Handles.BeginGUI();
 
         //Show radius
-        if (Physics.Raycast(ray, out hit, 1000.0f, TerrainLayer)) {
+        if (Physics.Raycast(ray, out hit, 1000.0f, TerrainLayer))
+        {
             //Debug.Log(hit.point);
             Handles.color = Color.red;
 
@@ -91,13 +108,21 @@ public class ObjectPlacer : EditorWindow {
 
     }
 
-    private void RemoveObjects(Vector3 hitPoint) {
+    /*
+        Created by Jannik Pedersen.
+    */
+    /// <summary>
+    /// Removes the object in the user selected brush radius around the specified hit point
+    /// </summary>
+    /// <param name="hitPoint">The point to remove objects around</param>
+    private void RemoveObjects(Vector3 hitPoint)
+    {
         Collider[] hitColliders = Physics.OverlapSphere(hitPoint, brushRadius);
         //Debug.Log("Colliders hit : " + hitColliders.Length);
         for (int i = 0; i < hitColliders.Length; i++)
         {
             //BUG: This will delete ANYTHING without "Terrain" in it's name, incl. the player and camera etc.
-            //Use the 'layer' "EnvironmentObjects" instead.
+            //Use the 'layer' "EnvironmentObjects" instead. -- Patrick Staalbo
             if (!hitColliders[i].gameObject.name.Contains("Terrain") && !hitColliders[i].gameObject.name.Contains("player") && !hitColliders[i].gameObject.name.Contains("camera"))
             {
                 DestroyImmediate(hitColliders[i].gameObject);
@@ -105,8 +130,12 @@ public class ObjectPlacer : EditorWindow {
         }
     }
 
-
-    private void InstantiateObjectAtLoc(RaycastHit hit) {
+    /// <summary>
+    /// Spawns an object with random scale and rotation at the hit.point
+    /// </summary>
+    /// <param name="hit">The raycast hit</param>
+    private void InstantiateObjectAtLoc(RaycastHit hit)
+    {
 
         //Find spawn locations inside area
         List<Vector3> spawnLocations = new List<Vector3>();
@@ -150,7 +179,11 @@ public class ObjectPlacer : EditorWindow {
 
     }
 
-    
+    /// <summary>
+    /// Finds possible spawn positions in a circle or square for the selected object(s) (respective to the current settings)
+    /// </summary>
+    /// <param name="hitPoint"></param>
+    /// <returns>Returns a List<Vector3> of valid spawn positions</returns>
     private List<Vector3> FindPossibleSpawnLocations(Vector3 hitPoint)
     {
         List<Vector3> spawnLocations = new List<Vector3>();
@@ -169,7 +202,7 @@ public class ObjectPlacer : EditorWindow {
                                             0,
                                             hitPoint.z - (colsRows / 2 * _correctedDensity) + _correctedDensity * z + posVarianceZ);
 
-                //Prevent's overlapping
+                //Prevents overlapping
                 bool overlapping = false;
                 foreach (Vector3 otherPos in spawnLocations)
                 {
@@ -188,7 +221,8 @@ public class ObjectPlacer : EditorWindow {
                 {
                     if (Vector3.Distance(hitPoint, newPos) < brushRadius)
                         spawnLocations.Add(newPos);
-                } else
+                }
+                else
                 {
                     if (hitPoint.x - brushRadius < newPos.x && hitPoint.x + brushRadius > newPos.x &&
                         hitPoint.z - brushRadius < newPos.z && hitPoint.z + brushRadius > newPos.z)
@@ -196,7 +230,7 @@ public class ObjectPlacer : EditorWindow {
                         spawnLocations.Add(newPos);
                     }
                 }
-                    
+
             }
         }
 
@@ -204,7 +238,8 @@ public class ObjectPlacer : EditorWindow {
         return spawnLocations;
     }
 
-    void OnGUI() {
+    void OnGUI()
+    {
         //To add the list of objects
         ScriptableObject target = this;
         SerializedObject so = new SerializedObject(target);

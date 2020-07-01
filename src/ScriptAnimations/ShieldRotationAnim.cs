@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// Makes the crystal's shield rotate
+/// </summary>
+
 public class ShieldRotationAnim : ScriptAnim
 {
     public float rotationSpeed = 5;

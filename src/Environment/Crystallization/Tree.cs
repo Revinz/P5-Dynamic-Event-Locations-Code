@@ -46,6 +46,9 @@ public class Tree : CrystallizableEntity
 
     }
 
+    /// <summary>
+    /// Disables all the crystal renderers to make a bare tree.
+    /// </summary>
     public void SetupTree()
     {
 

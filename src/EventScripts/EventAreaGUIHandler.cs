@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// Handles the GUI in the Unity Editor for the EventArea
+/// </summary>
 public class EventAreaGUIHandler : Editor
 {
     private EventArea area;
@@ -42,6 +45,9 @@ public class EventAreaGUIHandler : Editor
 
     }
 
+    /// <summary>
+    /// Draws the event area circles
+    /// </summary>
     public void OnDrawGizmos()
     {
         Handles.BeginGUI();

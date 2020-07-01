@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneViewFollow : MonoBehaviour {
+/// <summary>
+/// Scene camera follow the player. Used during test observation. 
+/// /// </summary>
+public class SceneViewFollow : MonoBehaviour
+{
 
     private UnityEditor.SceneView sceneView;
 
@@ -12,7 +16,8 @@ public class SceneViewFollow : MonoBehaviour {
     private Vector3 vecOffset = new Vector3(0, -140, 75);
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
 
         sceneView = UnityEditor.SceneView.lastActiveSceneView;
 
@@ -20,12 +25,14 @@ public class SceneViewFollow : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void LateUpdate() {
+    void LateUpdate()
+    {
         if (Application.isPlaying)
             Follow();
     }
 
-    private void Follow() {
+    private void Follow()
+    {
         sceneView.camera.transform.position = mainCamTrans.position - vecOffset;
         sceneView.camera.transform.rotation = Quaternion.LookRotation((sceneView.camera.transform.position - mainCamTrans.position) * -1);
         sceneView.AlignViewToObject(sceneView.camera.transform);

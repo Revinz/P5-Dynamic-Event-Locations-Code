@@ -12,6 +12,10 @@ public class Crystallization : MonoBehaviour
         level++;
     }
 
+    /// <summary>
+    /// Adds crystallization to trees around the object
+    /// </summary>
+    /// <param name="other">Collider from a tree</param>
     private void OnTriggerEnter(Collider other)
     {
         

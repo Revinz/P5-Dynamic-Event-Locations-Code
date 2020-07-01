@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Adds the Fog shader onto the camera
+/// </summary>
+
 [ExecuteInEditMode]
 public class ShaderScript : MonoBehaviour
 {

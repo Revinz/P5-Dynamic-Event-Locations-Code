@@ -4,9 +4,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// EventArea determines the area an event can spawn in. 
+/// This hides/disables all objects inside the event area to avoid
+/// conflict between the premade events and the terrain objects that would be inside the EventArea
+/// </summary>
 [ExecuteInEditMode]
 public class EventArea : MonoBehaviour
-{
+{   
     [SerializeField] //Used for showing in the inspector window 
     public EventAreaProperties properties;
     [SerializeField]
@@ -80,6 +85,9 @@ public class EventArea : MonoBehaviour
         HideObjectsInArea();
     }
 
+    /// <summary>
+    /// Finds all objects in the area and adds it to an array that stores all the colliders
+    /// </summary>
     void FindObjectsInArea()
     {
         //Prevents the area to be moved up/down on the y-axis, which distorts the size of the area depending on the angle
@@ -96,7 +104,7 @@ public class EventArea : MonoBehaviour
         //Add all colliders in the area to an array
         collidersData.collidersInArea = Physics.OverlapSphere(transform.position, properties.EMPTY_AREA_RADIUS);
 
-        //Revert the settings back to the orignal settings
+        //Revert the settings back to the original settings
         for (int i = 0; i < allTreesInScene.Length; i++)
         {
             allTreesInScene[i].Collider.enabled = originalSettings[i];
@@ -104,6 +112,11 @@ public class EventArea : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Hides all the objects inside the EventArea.
+    /// 
+    /// Note: Must be done in after all EventAreas have called FindObjectsInArea()
+    /// </summary>
     private void HideObjectsInArea()
     {
         if (collidersData.collidersInArea == null)
@@ -193,6 +206,7 @@ public class EventArea : MonoBehaviour
 
 /// <summary>
 /// Stores the colliders in the area.
+/// Used to store data between frames in the Editor, and when starting
 /// </summary>
 public class CollidersData
 {

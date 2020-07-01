@@ -6,6 +6,8 @@ using UnityEngine.Profiling;
 /// <summary>
 /// Enables the colliders for trees
 /// This is done to increase performance, since we have 5k+ trees in the world at all times.
+/// 
+/// Retrospect: Occlusion culling would have been better than doing this.
 /// </summary>
 public class CollisionEnabler : MonoBehaviour
 {

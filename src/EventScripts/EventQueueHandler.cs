@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System.Reflection;
 
+[Obsolete("Ended up not being used")]
 public class EventQueueHandler : MonoBehaviour
 {
     private GameObject player;
