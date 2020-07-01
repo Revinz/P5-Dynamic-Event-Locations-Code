@@ -6,6 +6,7 @@ Code Only for P5 semester project.
 2) The project version control was done with 'Unity Collab' and therefor the contributions can not be seen. Authors can be seen below:
 
 # Authors
+
 ## Primary contributers:
 Patrick Staalbo
 Mikkel G Hansen
